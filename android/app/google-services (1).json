@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "315339841884",
+    "project_id": "ideal-skills",
+    "storage_bucket": "ideal-skills.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315339841884:android:cffd658512878c1e61e199",
+        "android_client_info": {
+          "package_name": "com.example.ideal_skills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315339841884-q2s4smdcnv24qaja7hqbmm2vv54lgsik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ideal_skills",
+            "certificate_hash": "5df1804afc2cbe697690148bc75e5fa078d945ae"
+          }
+        },
+        {
+          "client_id": "315339841884-gfu783ka1e1ctst87rcl285f4up4fqi8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_2ihsadRDv8nU-JoSvsHhkitz1YWTJ2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315339841884-gfu783ka1e1ctst87rcl285f4up4fqi8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "315339841884-dg0946gi1bs7hfqk92go3kk1hdl8j7oo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.idealskills"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

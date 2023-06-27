@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
       home: const ResponsiveLayout(
         webScreenLayout: WebScreenLayout(),
         mobileScreenLayout: MobileScreenLayout(),
+        // home: Scaffold(
+        //   body: Text("This is it"),
       ),
     );
   }

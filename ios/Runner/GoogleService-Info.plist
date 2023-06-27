@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>315339841884-dg0946gi1bs7hfqk92go3kk1hdl8j7oo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.315339841884-dg0946gi1bs7hfqk92go3kk1hdl8j7oo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC5jrsErIOsIUEW_KbgbSLIpkBRSbPy0J0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>315339841884</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.idealskills</string>
+	<key>PROJECT_ID</key>
+	<string>ideal-skills</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ideal-skills.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:315339841884:ios:bc942bea8b4e846361e199</string>
+</dict>
+</plist>

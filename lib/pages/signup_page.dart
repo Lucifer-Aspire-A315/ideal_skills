@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../resources/auth_methods.dart';
 import '../utils/colors.dart';
 import '../widgets/text_field_input.dart';
 
@@ -33,7 +34,7 @@ class SigninPageState extends State<SigninPage> {
           padding: EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 flex: 2,
@@ -54,7 +55,7 @@ class SigninPageState extends State<SigninPage> {
               Stack(
                 children: [
                   const CircleAvatar(
-                    radius: 67,
+                    radius: 30,
                     backgroundImage: AssetImage("assets/login_pg.jpeg"),
                   ),
                   Positioned(
@@ -68,8 +69,9 @@ class SigninPageState extends State<SigninPage> {
                   ),
                 ],
               ),
-              Spacer(),
-              //Text field input for username
+              const SizedBox(
+                height: 25,
+              ), //Text field input for username
               TextFieldInput(
                 texteditingcontroller: _usernamecontroller,
                 hintText: "Enter Your UserName",
@@ -110,6 +112,13 @@ class SigninPageState extends State<SigninPage> {
               ),
               //Button
               InkWell(
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                      email: _emailcontroller.text,
+                      password: _passwordcontroller.text,
+                      username: _usernamecontroller.text,
+                      bio: _biocontroller.text);
+                },
                 child: Container(
                   child: const Text("Sign Up"),
                   width: double.infinity,
@@ -125,8 +134,9 @@ class SigninPageState extends State<SigninPage> {
                   ),
                 ),
               ),
-              const Spacer(),
-
+              const SizedBox(
+                height: 25,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -151,6 +161,9 @@ class SigninPageState extends State<SigninPage> {
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 25,
                   ),
                 ],
               ),

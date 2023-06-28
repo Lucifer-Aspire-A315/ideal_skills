@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ideal_skills/pages/login_page.dart';
+import 'package:ideal_skills/pages/signup_page.dart';
 import 'package:ideal_skills/responsive/mobile_screen_layout.dart';
 import 'package:ideal_skills/responsive/responsive_layout.dart';
 import 'package:ideal_skills/responsive/web_screen_layout.dart';
@@ -19,12 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
       title: 'ideal_skills ',
-      home: const ResponsiveLayout(
-        webScreenLayout: WebScreenLayout(),
-        mobileScreenLayout: MobileScreenLayout(),
-        // home: Scaffold(
-        //   body: Text("This is it"),
-      ),
+      // home: const ResponsiveLayout(
+      //   webScreenLayout: WebScreenLayout(),
+      //   mobileScreenLayout: MobileScreenLayout(),
+      home: const SigninPage(),
     );
   }
 }

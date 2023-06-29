@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +14,7 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
-    // required Uint8List file,
+    Uint8List? file,
   }) async {
     String res = "Some error occurred !!";
     try {

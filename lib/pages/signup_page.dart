@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../resources/auth_methods.dart';
 import '../utils/colors.dart';
+import '../utils/image_utils.dart';
 import '../widgets/text_field_input.dart';
 
 class SigninPage extends StatefulWidget {
@@ -16,6 +20,7 @@ class SigninPageState extends State<SigninPage> {
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _biocontroller = TextEditingController();
   final TextEditingController _usernamecontroller = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -24,6 +29,13 @@ class SigninPageState extends State<SigninPage> {
     _passwordcontroller.dispose();
     _biocontroller.dispose();
     _usernamecontroller.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -54,18 +66,25 @@ class SigninPageState extends State<SigninPage> {
               //Circular Avatar
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage("assets/login_pg.jpeg"),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 55,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 55,
+                          backgroundImage: AssetImage("assets/user_image.jpg"),
+                        ),
                   Positioned(
+                    bottom: -8,
+                    left: 73,
                     child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.cameraswitch),
-                      color: blueColor,
+                      visualDensity: VisualDensity.comfortable,
+                      iconSize: 30,
+                      onPressed: selectImage,
+                      icon: Icon(Icons.camera_alt_rounded,
+                          color: Color.fromARGB(255, 36, 37, 37)),
                     ),
-                    bottom: -10,
-                    left: 100,
                   ),
                 ],
               ),

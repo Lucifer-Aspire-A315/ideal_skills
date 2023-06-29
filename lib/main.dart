@@ -12,12 +12,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyBVg47YBeR9hCKgfCqxRfhWlVctLtf9J_c",
-            appId: "1:315339841884:web:0d26558dd1ce533361e199",
-            messagingSenderId: "315339841884",
-            projectId: "ideal-skills",
-            storageBucket: "ideal-skills.appspot.com",),);
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyBVg47YBeR9hCKgfCqxRfhWlVctLtf9J_c",
+        appId: "1:315339841884:web:0d26558dd1ce533361e199",
+        messagingSenderId: "315339841884",
+        projectId: "ideal-skills",
+        storageBucket: "ideal-skills.appspot.com",
+      ),
+    );
   } else {
     await Firebase.initializeApp();
   }

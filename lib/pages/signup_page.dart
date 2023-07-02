@@ -1,9 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:ideal_skills/pages/login_page.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../resources/auth_methods.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
 import '../utils/image_utils.dart';
 import '../widgets/text_field_input.dart';
@@ -21,6 +25,7 @@ class SigninPageState extends State<SigninPage> {
   final TextEditingController _biocontroller = TextEditingController();
   final TextEditingController _usernamecontroller = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -29,6 +34,33 @@ class SigninPageState extends State<SigninPage> {
     _passwordcontroller.dispose();
     _biocontroller.dispose();
     _usernamecontroller.dispose();
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+      email: _emailcontroller.text,
+      password: _passwordcontroller.text,
+      username: _usernamecontroller.text,
+      bio: _biocontroller.text,
+      file: _image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+                webScreenLayout: WebScreenLayout(),
+                mobileScreenLayout: MobileScreenLayout(),
+              )));
+    }
   }
 
   void selectImage() async {
@@ -61,7 +93,7 @@ class SigninPageState extends State<SigninPage> {
                 height: 64,
               ),
               const SizedBox(
-                height: 64,
+                height: 40,
               ),
               //Circular Avatar
               Stack(
@@ -131,15 +163,15 @@ class SigninPageState extends State<SigninPage> {
               ),
               //Button
               InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().signUpUser(
-                      email: _emailcontroller.text,
-                      password: _passwordcontroller.text,
-                      username: _usernamecontroller.text,
-                      bio: _biocontroller.text);
-                },
+                onTap: () => signUpUser(),
                 child: Container(
-                  child: const Text("Sign Up"),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text("Sign Up"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -168,7 +200,11 @@ class SigninPageState extends State<SigninPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ));
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,

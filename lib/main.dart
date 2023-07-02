@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ideal_skills/pages/home_page.dart';
 import 'package:ideal_skills/pages/login_page.dart';
 import 'package:ideal_skills/pages/signup_page.dart';
 import 'package:ideal_skills/responsive/mobile_screen_layout.dart';
@@ -40,7 +42,31 @@ class MyApp extends StatelessWidget {
       // home: const ResponsiveLayout(
       //   webScreenLayout: WebScreenLayout(),
       //   mobileScreenLayout: MobileScreenLayout(),
-      home: const SigninPage(),
+      home: StreamBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const ResponsiveLayout(
+                  webScreenLayout: WebScreenLayout(),
+                  mobileScreenLayout: MobileScreenLayout(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
+                ),
+              );
+            }
+
+            return const LoginPage();
+          },
+          stream: FirebaseAuth.instance.authStateChanges()),
     );
   }
 }

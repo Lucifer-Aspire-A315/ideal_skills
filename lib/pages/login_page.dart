@@ -8,7 +8,6 @@ import '../responsive/responsive_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
 import '../widgets/text_field_input.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,13 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
   bool _isLoading = false;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailcontroller.dispose();
-    _passwordcontroller.dispose();
-  }
 
   void loginUser() async {
     setState(() {
@@ -58,11 +50,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _emailcontroller.dispose();
+    _passwordcontroller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SigninPage(),
+                        builder: (context) => const SigninPage(),
                       ));
                     },
                     child: Container(

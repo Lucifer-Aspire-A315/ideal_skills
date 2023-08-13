@@ -32,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (res == "success") {
       //
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
                 webScreenLayout: WebScreenLayout(),
@@ -42,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       // ));
     } else {
       //
+      // ignore: use_build_context_synchronously
       showSnackBar(res, context);
     }
     setState(() {
@@ -112,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       )
                     : Container(
-                        child: const Text("Log In"),
                         width: double.infinity,
                         alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -124,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           color: blueColor,
                         ),
+                        child: const Text("Log In"),
                       ),
               ),
               const Spacer(),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -47,7 +49,6 @@ class SigninPageState extends State<SigninPage> {
       bio: _biocontroller.text,
       file: _image!,
     );
-
     setState(() {
       _isLoading = false;
     });
@@ -75,7 +76,7 @@ class SigninPageState extends State<SigninPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +115,7 @@ class SigninPageState extends State<SigninPage> {
                       visualDensity: VisualDensity.comfortable,
                       iconSize: 30,
                       onPressed: selectImage,
-                      icon: Icon(Icons.camera_alt_rounded,
+                      icon: const Icon(Icons.camera_alt_rounded,
                           color: Color.fromARGB(255, 36, 37, 37)),
                     ),
                   ),
@@ -165,13 +166,6 @@ class SigninPageState extends State<SigninPage> {
               InkWell(
                 onTap: () => signUpUser(),
                 child: Container(
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor,
-                          ),
-                        )
-                      : const Text("Sign Up"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -183,6 +177,13 @@ class SigninPageState extends State<SigninPage> {
                     ),
                     color: blueColor,
                   ),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text("Sign Up"),
                 ),
               ),
               const SizedBox(
@@ -202,7 +203,7 @@ class SigninPageState extends State<SigninPage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => const LoginPage(),
                       ));
                     },
                     child: Container(

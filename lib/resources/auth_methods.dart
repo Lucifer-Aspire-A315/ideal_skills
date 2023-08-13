@@ -9,13 +9,34 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<model.User> getUserDetails() async {
-    User? currentUser = _auth.currentUser;
+  // Future<model.User> getUserDetails() async {
+  //   User currentUserr = _auth.currentUser!;
 
-    DocumentSnapshot snap =
-        await _firestore.collection('users').doc(currentUser?.uid).get();
+  //   DocumentSnapshot snap =
+  //       await _firestore.collection('users').doc(currentUserr.uid).get();
 
-    return model.User.fromSnap(snap);
+  //   return model.User.fromSnap(snap);
+  //   // return model.User(
+  //   //   username: (snap.data() as Map<String, dynamic>)['username'] ?? '',
+  //   //   uid: (snap.data() as Map<String, dynamic>)['uid'] ?? '',
+  //   //   email: (snap.data() as Map<String, dynamic>)['email'] ?? '',
+  //   //   bio: (snap.data() as Map<String, dynamic>)['bio'] ?? '',
+  //   //   photoUrl: (snap.data() as Map<String, dynamic>)['photoUrl'] ?? '',
+  //   //   followers: (snap.data() as Map<String, dynamic>)['followers'] ?? [],
+  //   //   following: (snap.data() as Map<String, dynamic>)['following'] ?? [],
+  //   // );
+  // }
+
+  Future<Map<String, dynamic>?> getUserDetails() async {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      DocumentSnapshot snapshot =
+          await _firestore.collection('users').doc(uid).get();
+      if (snapshot.exists) {
+        return snapshot.data() as Map<String, dynamic>;
+      }
+    }
+    return null;
   }
 
   //sign up user
@@ -39,7 +60,7 @@ class AuthMethods {
             email: email, password: password);
 
         String photoUrl = await StorageMethods()
-            .UploadImageToStorage("ProfilePics", file!, false);
+            .uploadImageToStorage("ProfilePics", file!, false);
 
         // add user to database
 

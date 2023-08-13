@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ideal_skills/models/user.dart';
+import 'package:ideal_skills/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    // final User usr = Provider.of<UserProvider>(context, listen: false).getUser;
+
+    return Scaffold(
       body: Center(
-        child: Text("Home Page"),
-      ),
+          // child: Text(usr.photoUrl),
+          ),
     );
   }
 }

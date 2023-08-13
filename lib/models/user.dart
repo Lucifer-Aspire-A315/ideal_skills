@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   final String username;
@@ -7,8 +6,8 @@ class User {
   final String email;
   final String bio;
   final String photoUrl;
-  final List followers;
-  final List following;
+  final List<dynamic> followers;
+  final List<dynamic> following;
   const User({
     required this.username,
     required this.uid,
@@ -29,16 +28,17 @@ class User {
         "following ": following,
       };
 
-  static User fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  // static User fromSnap(DocumentSnapshot snap) {
+  //   var snapshot = snap.data() as Map<String, dynamic>;
 
-    return User(
-        username: snapshot['username'],
-        uid: snapshot['uid'],
-        email: snapshot['email'],
-        bio: snapshot['bio'],
-        photoUrl: snapshot['photoUrl'],
-        followers: snapshot['followers'],
-        following: snapshot['following']);
-  }
+  //   return User(
+  //     username: snapshot['username'],
+  //     uid: snapshot['uid'],
+  //     email: snapshot['email'],
+  //     bio: snapshot['bio'],
+  //     photoUrl: snapshot['photoUrl'],
+  //     followers: snapshot['followers'],
+  //     following: snapshot['following'],
+  //   );
+  // }
 }

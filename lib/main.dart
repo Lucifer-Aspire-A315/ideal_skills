@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -22,8 +23,12 @@ void main() async {
         storageBucket: "ideal-skills.appspot.com",
       ),
     );
+    // await FirebaseFirestore.instance
+    //     .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
   } else {
     await Firebase.initializeApp();
+    // await FirebaseFirestore.setLoggingEnabled(true);
+    // FirebaseFirestore.instance.settings.persistenceEnabled;
   }
   runApp(const MyApp());
 }
@@ -76,3 +81,12 @@ class MyApp extends StatelessWidget {
         ));
   }
 }
+
+
+//flutter build web --web-renderer html --release
+
+//flutter run -d chrome --web-renderer html
+
+
+// for android
+//flutter run -d devicename or id

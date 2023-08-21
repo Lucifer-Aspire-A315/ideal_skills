@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:ideal_skills/models/user.dart';
+import 'package:ideal_skills/provider/user_provider.dart';
+import 'package:ideal_skills/resources/firestore_meths.dart';
 import 'package:ideal_skills/utils/colors.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class PostCard extends StatelessWidget {
+import 'like_animation.dart';
+
+class PostCard extends StatefulWidget {
   final snap;
 
   const PostCard({super.key, required this.snap});
 
   @override
-  Widget build(BuildContext context) {
-    String? profile, desc, uname, post, date;
-    int? like;
+  State<PostCard> createState() => _PostCardState();
+}
 
-    snap.forEach((key, value) {
+class _PostCardState extends State<PostCard> {
+  bool isLikeAnimating = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final Map<String, dynamic> user =
+        Provider.of<UserProvider>(context).getUser;
+    String? profile, desc, uname, post;
+    var date;
+    var uid, postId;
+    List? like;
+    user.forEach((key, value) {
+      if (key.contains("uid")) {
+        uid = value;
+      }
+    });
+
+    widget.snap.forEach((key, value) {
+      if (key.contains("postId")) {
+        postId = value;
+      }
       if (key.contains("profImage")) {
         profile = value;
       }
@@ -25,13 +51,13 @@ class PostCard extends StatelessWidget {
         post = value;
       }
       if (key.contains("likes")) {
-        like = value.length;
+        like = value;
       }
-      // if (key.contains("datePublished")) {
-      //   date = value;
-      // }
+      if (key.contains("datePublished")) {
+        date = value;
+      }
     });
-    print(snap);
+    print(widget.snap);
     // print(snap['datePublished']);
     // print(date);
     return Container(
@@ -104,13 +130,44 @@ class PostCard extends StatelessWidget {
           ),
           //image section
 
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
-            width: double.infinity,
-            child: Image.network(
-              // snap['postUrl'].toString(),
-              post!,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onDoubleTap: () async {
+              await FirestoreMeths().likePost(postId, uid.toString(), like!);
+              setState(() {
+                isLikeAnimating = true;
+              });
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  width: double.infinity,
+                  child: Image.network(
+                    // snap['postUrl'].toString(),
+                    post!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: const Duration(milliseconds: 200),
+                  opacity: isLikeAnimating ? 1 : 0,
+                  child: LikeAnimation(
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Colors.white,
+                      size: 120,
+                    ),
+                    isAnimating: isLikeAnimating,
+                    duration: const Duration(milliseconds: 400),
+                    onEnd: () {
+                      setState(() {
+                        isLikeAnimating = false;
+                      });
+                    },
+                  ),
+                )
+              ],
             ),
           ),
 
@@ -118,11 +175,20 @@ class PostCard extends StatelessWidget {
 
           Row(
             children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+              LikeAnimation(
+                isAnimating: like!.contains(uid.toString()),
+                smallLike: true,
+                child: IconButton(
+                  onPressed: () async {
+                    await FirestoreMeths()
+                        .likePost(postId, uid.toString(), like!);
+                  },
+                  icon: like!.contains(uid.toString())
+                      ? Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(Icons.favorite_border),
                 ),
               ),
               IconButton(
@@ -162,7 +228,7 @@ class PostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${like.toString()} likes',
+                  '${like!.length.toString()} likes',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Container(
@@ -204,8 +270,7 @@ class PostCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   child: Text(
-                    '12/12/12',
-                    // DateFormat.yMMMd().format(date),
+                    DateFormat.yMMMd().format(date.toDate()),
                     // DateFormat.yMEd().add_jms().format(date),
                     // date!,
                     style: const TextStyle(

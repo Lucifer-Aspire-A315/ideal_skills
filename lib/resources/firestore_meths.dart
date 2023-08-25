@@ -53,4 +53,40 @@ class FirestoreMeths {
       print(e.toString());
     }
   }
+
+  Future<void> postComment(String postId, String text, String uid, String name,
+      String profImage) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentId = Uuid().v1();
+        await _firestore
+            .collection("posts")
+            .doc(postId)
+            .collection("comments")
+            .doc(commentId)
+            .set({
+          "profimage": profImage,
+          "name": name,
+          "uid": uid,
+          "text": text,
+          "commentId": commentId,
+          "datePublished": DateTime.now(),
+        });
+      } else {
+        print("Text is empty");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //deleting posts
+
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (err) {
+      print(err.toString());
+    }
+  }
 }

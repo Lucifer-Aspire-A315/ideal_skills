@@ -41,10 +41,11 @@ class _SearchPageState extends State<SearchPage> {
           ? FutureBuilder(
               future: FirebaseFirestore.instance
                   .collection('users')
-                  .where('username', isEqualTo: searchController.text)
-                  .orderBy(
-                    searchController.text,
-                  )
+                  // .where('username',
+                  //     isGreaterThanOrEqualTo: searchController.text)
+                  // .orderBy(
+                  //   searchController.text,
+                  // )
                   .get(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
@@ -57,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
                   itemCount: (snapshot.data as dynamic).docs.length,
                   itemBuilder: (context, index) {
                     snapshot.data!.docs[index].data().forEach((key, value) {
-                      if (key.contains("username")) {
+                      if (key.contains('username')) {
                         name = value;
                       }
                       if (key.contains("photoUrl")) {
@@ -67,17 +68,32 @@ class _SearchPageState extends State<SearchPage> {
                     print("hello");
                     print(name);
                     print(photo);
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          photo,
-                          // (snapshot.data as dynamic).docs[index]['photoUrl'],
-                          // (snapshot.data as dynamic).docs[index]['photoUrl'],
+                    return Container(
+                      // height: 400,
+                      // width: 200,
+                      // color: Colors.deepPurpleAccent,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          foregroundColor: Colors.cyanAccent,
+                          backgroundImage: NetworkImage(
+                            photo!.toString(),
+                            // snapshot.data!.docs[index]
+                            //     .data()
+                            //     .containsKey("username")
+                            //     .toString(),
+
+                            // (snapshot.data as dynamic).docs[index]['photoUrl'],
+                          ),
                         ),
-                      ),
-                      title: Text(
-                        name,
-                        // (snapshot.data as dynamic).docs[index]['username'],
+                        title: Text(
+                          name!.toString(),
+                          // snapshot.data!.docs[index]
+                          //     .data()
+                          //     .containsKey("photoUrl")
+                          //     .toString(),
+
+                          // (snapshot.data as dynamic).docs[index]['username'],
+                        ),
                       ),
                     );
                   },

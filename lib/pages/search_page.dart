@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 import 'package:ideal_skills/utils/colors.dart';
 
 class SearchPage extends StatefulWidget {
@@ -68,39 +70,49 @@ class _SearchPageState extends State<SearchPage> {
                     print("hello");
                     print(name);
                     print(photo);
-                    return Container(
-                      // height: 400,
-                      // width: 200,
-                      // color: Colors.deepPurpleAccent,
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          foregroundColor: Colors.cyanAccent,
-                          backgroundImage: NetworkImage(
-                            photo!.toString(),
-                            // snapshot.data!.docs[index]
-                            //     .data()
-                            //     .containsKey("username")
-                            //     .toString(),
-
-                            // (snapshot.data as dynamic).docs[index]['photoUrl'],
-                          ),
-                        ),
-                        title: Text(
-                          name!.toString(),
+                    return ListTile(
+                      leading: CircleAvatar(
+                        foregroundColor: Colors.cyanAccent,
+                        backgroundImage: NetworkImage(
+                          photo!.toString(),
                           // snapshot.data!.docs[index]
                           //     .data()
-                          //     .containsKey("photoUrl")
+                          //     .containsKey("username")
                           //     .toString(),
 
-                          // (snapshot.data as dynamic).docs[index]['username'],
+                          // (snapshot.data as dynamic).docs[index]['photoUrl'],
                         ),
+                      ),
+                      title: Text(
+                        name!.toString(),
+                        // snapshot.data!.docs[index]
+                        //     .data()
+                        //     .containsKey("photoUrl")
+                        //     .toString(),
+
+                        // (snapshot.data as dynamic).docs[index]['username'],
                       ),
                     );
                   },
                 );
               },
             )
-          : Text("Posts"),
+          : FutureBuilder(
+              future: FirebaseFirestore.instance.collection('posts').get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return MasonryGridView.count(
+                  crossAxisCount: 3,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  itemBuilder: (context, index) => Image.network(
+                    (snapshot.data! as dynamic).docs[index]['postUrl'],
+                  ),
+                );
+              }),
     );
   }
 }

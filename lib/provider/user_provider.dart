@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:ideal_skills/resources/auth_methods.dart';
+import 'package:ideal_skills/models/user.dart';
 
 class UserProvider with ChangeNotifier {
-  Map<String, dynamic>? _user;
+  User? _user;
   final AuthMethods _authMethods = AuthMethods();
-  Map<String, dynamic> get getUser => _user!;
 
+  // Getter for the user object with null check
+  User? get getUser => _user;
+
+  // Method to refresh the user details
   Future<void> refreshUser() async {
-    Map<String, dynamic>? user = await _authMethods.getUserDetails();
-    _user = user;
-    notifyListeners();
+    try {
+      User? user = await _authMethods.getUserDetails();
+      if (user != null) {
+        _user = user;
+        notifyListeners();
+      } else {
+        print("No user is currently signed in.");
+      }
+    } catch (e) {
+      print("Error fetching user details: $e");
+    }
   }
 }
-
-// class UserProvider with ChangeNotifier {
-//   User? _user;
-//   final AuthMethods _authMethods = AuthMethods();
-//   User get getUser => _user!;
-
-//   Future<void> refreshUser() async {
-//     User? user = await _authMethods.getUserDetails();
-//     _user = user;
-//     notifyListeners();
-//   }
-// }
